@@ -1,0 +1,29 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - run: npm ci
+    - run: npm run build
+    - run: npm test
+
+  # Optional Madge check job
+  madge-check:
+    needs: build  # This ensures the Madge check runs after the build job
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run Madge Check
+      uses: ./.github/actions/madge-check

@@ -35,3 +35,8 @@ jobs:
       run: |
         chmod +x .github/scripts/madge.bash
         .github/scripts/madge.bash
+
+# Optional Madge check job
+  madge-check:
+    needs: build  # This ensures the Madge check runs after the build job
+    uses: ./.github/workflows/madge-check.yml
