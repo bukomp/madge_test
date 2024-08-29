@@ -33,5 +33,5 @@ jobs:
 
     - name: Run Madge circular dependency check
       run: |
-        chmod +x .github/scripts/madge.sh
-        .github/scripts/madge.sh
+        chmod +x .github/scripts/madge.bash
+        .github/scripts/madge.bash
