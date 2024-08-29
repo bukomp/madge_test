@@ -16,7 +16,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Install Madge
       run: npm install -g madge
@@ -34,16 +34,15 @@ jobs:
     - name: Run Madge circular dependency check
       run: |
         if [ -f "tsconfig.json" ]; then
-          madge --circular --extensions ts,tsx --ts-config tsconfig.json src/index.ts
+          output=$(madge --circular --extensions ts,tsx --ts-config tsconfig.json src/index.ts)
         else
-          madge --circular --extensions ts,tsx src/index.ts
+          output=$(madge --circular --extensions ts,tsx src/index.ts)
         fi
-
-    - name: Check Madge output
-      run: |
-        if madge --circular --extensions ts,tsx src/index.ts | grep -q .; then
+        echo "$output"
+        if echo "$output" | grep -q "Found 0 circular dependencies"; then
+          echo "No circular dependencies found. Check passed."
+          exit 0
+        else
           echo "Circular dependencies found. Check failed."
           exit 1
-        else
-          echo "No circular dependencies found. Check passed."
         fi
