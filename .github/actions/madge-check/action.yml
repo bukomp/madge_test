@@ -1,43 +1,37 @@
-name: 'Madge Circular Dependency Check'
-description: 'Checks for circular dependencies using Madge'
+name: Circular Dependency Check
 
-inputs:
-  entry-point:
-    description: 'Entry point for Madge to start checking'
-    required: false
-    default: 'src/index.ts'
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 runs:
   using: "composite"
+
   steps:
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+  - uses: actions/checkout@v3
 
-    - name: Install Madge and jq
-      run: |
-        npm install -g madge
-        sudo apt-get install jq
-      shell: bash
+  - name: Use Node.js
+    uses: actions/setup-node@v3
+    with:
+      node-version: '20'
 
-    - name: Check if package.json exists
-      id: check_files
-      uses: andstor/file-existence-action@v2
-      with:
-        files: "package.json"
+  - name: Install Madge
+    run: npm install -g madge
 
-    - name: Install dependencies
-      if: steps.check_files.outputs.files_exists == 'true'
-      run: npm install
-      shell: bash
+  - name: Check if package.json exists
+    id: check_files
+    uses: andstor/file-existence-action@v2
+    with:
+      files: "package.json"
 
-    - name: Run Madge circular dependency check
-      run: |
-        chmod +x .github/scripts/madge.bash
-        .github/scripts/madge.bash
+  - name: Install dependencies
+    if: steps.check_files.outputs.files_exists == 'true'
+    run: npm install
 
-# Optional Madge check job
-  madge-check:
-    needs: build  # This ensures the Madge check runs after the build job
-    uses: ./.github/workflows/madge-check.yml
+  - name: Run Madge circular dependency check
+    run: |
+      chmod +x .github/scripts/madge.bash
+      .github/scripts/madge.bash
+        

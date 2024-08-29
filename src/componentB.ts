@@ -7,3 +7,9 @@ export class ComponentB {
     this.helper = new HelperB();
   }
 }
+
+const condition = true
+
+if(condition &&1===1){
+  const a = 1
+}

@@ -25,5 +25,3 @@ jobs:
     - uses: actions/checkout@v3
     - name: Run Madge Check
       uses: ./.github/actions/madge-check
-      with:
-        entry-point: 'src/index.ts'  # You can customize the entry point if needed
