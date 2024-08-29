@@ -1,0 +1,36 @@
+name: Circular Dependency Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  madge-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g madge
+
+    - name: Run Madge circular dependency check
+      run: madge --circular --extensions ts,tsx --ts-config tsconfig.json src/index.ts
+
+    - name: Check Madge output
+      run: |
+        if madge --circular --extensions ts,tsx --ts-config tsconfig.json src/index.ts | grep -q .; then
+          echo "Circular dependencies found. Check failed."
+          exit 1
+        else
+          echo "No circular dependencies found. Check passed."
+        fi
