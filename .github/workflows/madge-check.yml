@@ -33,16 +33,5 @@ jobs:
 
     - name: Run Madge circular dependency check
       run: |
-        if [ -f "tsconfig.json" ]; then
-          output=$(madge --circular --extensions ts,tsx --ts-config tsconfig.json src/index.ts)
-        else
-          output=$(madge --circular --extensions ts,tsx src/index.ts)
-        fi
-        echo "$output"
-        if echo "$output" | grep -q "Found 0 circular dependencies"; then
-          echo "No circular dependencies found. Check passed."
-          exit 0
-        else
-          echo "Circular dependencies found. Check failed."
-          exit 1
-        fi
+        chmod +x .github/scripts/madge.sh
+        .github/scripts/madge.sh

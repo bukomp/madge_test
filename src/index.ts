@@ -1,8 +1,8 @@
-//import { ComponentA } from './componentA';
+import { ComponentA } from './componentA';
 import { ComponentB } from './componentB';
 
 const app = {
-  //componentA: new ComponentA(),
+  componentA: new ComponentA(),
   componentB: new ComponentB(),
 };
 

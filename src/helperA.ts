@@ -1,9 +1,9 @@
-import { ComponentB } from './componentB';  // This creates a circular dependency
+import { ComponentA } from './componentA';
 
 export class HelperA {
-  componentB: ComponentB;
+  componentA: ComponentA;
 
   constructor() {
-    this.componentB = new ComponentB();
+    this.componentA = new ComponentA();
   }
 }
