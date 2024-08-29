@@ -42,6 +42,7 @@ if echo "$output" | grep -q "^\[\]$"; then
   exit 0
 fi
 
+echo ""
 echo "❌ Circular dependencies found. Check failed!😞"
 echo "🔄 Rerunning with details..."
 echo ""
