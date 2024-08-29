@@ -17,7 +17,7 @@ jobs:
 
   # Optional Madge check job
   madge-check:
-    needs: build  # This ensures the Madge check runs after the build job
+    needs: setup  # This ensures the Madge check runs after the build job
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
