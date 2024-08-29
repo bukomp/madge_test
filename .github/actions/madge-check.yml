@@ -10,18 +10,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: '18'
 
-    - name: Install Madge
-      run: npm install -g madge
+    - name: Install Madge and jq
+      run: |
+        npm install -g madge
+        sudo apt-get install jq
+      shell: bash
 
     - name: Check if package.json exists
       id: check_files
@@ -32,6 +30,7 @@ runs:
     - name: Install dependencies
       if: steps.check_files.outputs.files_exists == 'true'
       run: npm install
+      shell: bash
 
     - name: Run Madge circular dependency check
       run: |

@@ -16,11 +16,16 @@ jobs:
       with:
         node-version: '18'
     - run: npm ci
+    - run: npm run build
+    - run: npm test
 
+  # Optional Madge check job
   madge-check:
-    needs: build
+    needs: build  # This ensures the Madge check runs after the build job
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Run Madge Check
       uses: ./.github/actions/madge-check
+      with:
+        entry-point: 'src/index.ts'  # You can customize the entry point if needed
