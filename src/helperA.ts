@@ -1,9 +1,8 @@
-import { ComponentA } from './componentA';
-
+import { ComponentB } from './componentB';
 export class HelperA {
-  componentA: ComponentA;
+  componentB: ComponentB;
 
   constructor() {
-    this.componentA = new ComponentA();
+      this.componentB = new ComponentB();
   }
 }

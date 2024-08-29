@@ -39,11 +39,15 @@ output=$(run_madge $config true)
 # Check for circular dependencies
 if echo "$output" | grep -q "^\[\]$"; then
   echo "✅ No circular dependencies found. Check passed! 🎉"
-else
-  echo "❌ Circular dependencies found. Check failed!😞"
-  echo "🔄 Rerunning without -j flag..."
-  
-  # Rerun without -j flag for all configurations
-  output=$(run_madge $config false)
-  echo "$output"
+  exit 0
 fi
+
+echo "❌ Circular dependencies found. Check failed!😞"
+echo "🔄 Rerunning with details..."
+echo ""
+
+# Rerun without -j flag for all configurations
+output=$(run_madge $config false)
+echo "$output"
+exit 1
+
