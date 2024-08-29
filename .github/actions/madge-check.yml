@@ -1,13 +1,15 @@
-name: Circular Dependency Check
+name: 'Madge Circular Dependency Check'
+description: 'Checks for circular dependencies using Madge'
 
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+inputs:
+  entry-point:
+    description: 'Entry point for Madge to start checking'
+    required: false
+    default: 'src/index.ts'
 
-jobs:
-  madge-check:
+runs:
+  using: "composite"
+  steps:
     runs-on: ubuntu-latest
 
     steps:
